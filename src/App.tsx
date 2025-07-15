@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 import { Send } from "lucide-react";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "../components/ui/dialog";
-import { Button } from "../components/ui/button";
-import { Input } from "../components/ui/input";
-import { Label } from "../components/ui/label";
-import { Textarea } from "../components/ui/textarea";
-import { ScrollArea } from "../components/ui/scroll-area";
-import { Toaster } from "../components/ui/sonner";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "./components/ui/dialog";
+import { Button } from "./components/ui/button";
+import { Input } from "./components/ui/input";
+import { Label } from "./components/ui/label";
+import { Textarea } from "./components/ui/textarea";
+import { ScrollArea } from "./components/ui/scroll-area";
+import { Toaster } from "./components/ui/sonner";
 import { toast } from "sonner";
 import svgPaths from "./imports/svg-gpkt0l4rxk";
 
@@ -234,7 +234,7 @@ function TermsOfService() {
   );
 }
 
-// Hero Section with Figma Design + Enhanced Animations + Infinite Scroll
+// Hero Section - Diseño exacto de Figma
 function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -250,7 +250,6 @@ function Hero() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Achievements array - base content
   const achievements = [
     "Premios Fundadoras 2024",
     "Featured Las Provincias",
@@ -261,14 +260,7 @@ function Hero() {
     "VDS 2024"
   ];
 
-  // Create multiple copies for truly infinite scroll
-  const infiniteAchievements = [
-    ...achievements,
-    ...achievements,
-    ...achievements,
-    ...achievements,
-    ...achievements
-  ];
+  const infiniteAchievements = [...achievements, ...achievements, ...achievements, ...achievements, ...achievements];
 
   return (
     <section id="hero" className="bg-[#000000] relative min-h-screen" data-name="Hero">
@@ -402,7 +394,7 @@ function Hero() {
               </motion.div>
             </motion.div>
             
-            {/* Truly infinite scrolling achievements */}
+            {/* Infinite scrolling achievements - 40 segundos, linear */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -411,7 +403,6 @@ function Hero() {
               data-name="Logros"
             >
               <div className="flex">
-                {/* First marquee container */}
                 <motion.div
                   animate={{ x: ["0%", "-100%"] }}
                   transition={{
@@ -448,7 +439,6 @@ function Hero() {
                   ))}
                 </motion.div>
 
-                {/* Second marquee container - offset for seamless effect */}
                 <motion.div
                   animate={{ x: ["0%", "-100%"] }}
                   transition={{
@@ -493,7 +483,7 @@ function Hero() {
   );
 }
 
-// Innova Section with Enhanced Hover Effects
+// Innova Section - Cards con color #6f26ff
 function Innova() {
   return (
     <section id="innova" className="bg-[#000000] relative py-12 sm:py-20">
@@ -651,10 +641,7 @@ function Proyectos() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           <motion.div
-            variants={fadeInLeft}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
+            {...fadeInLeft}
             className="bg-[rgba(255,255,255,0.03)] border border-[rgba(139,92,246,0.25)] rounded-xl p-8 hover:bg-[rgba(255,255,255,0.05)] transition-all duration-500 group shadow-[0px_4px_20px_0px_rgba(139,92,246,0.15)]"
             style={{
               backgroundImage: `linear-gradient(130.149deg, rgba(0, 0, 0, 0.7) 0%, rgba(139, 92, 246, 0.1) 100%), url('${imgBackground}')`,
@@ -680,10 +667,7 @@ function Proyectos() {
           </motion.div>
 
           <motion.div
-            variants={fadeInRight}
-            initial="initial"
-            whileInView="animate"
-            viewport={{ once: true }}
+            {...fadeInRight}
             className="bg-[rgba(255,255,255,0.03)] border border-[rgba(139,92,246,0.25)] rounded-xl p-8 hover:bg-[rgba(255,255,255,0.05)] transition-all duration-500 group shadow-[0px_4px_20px_0px_rgba(139,92,246,0.15)]"
             style={{
               backgroundImage: `linear-gradient(130.149deg, rgba(0, 0, 0, 0.7) 0%, rgba(139, 92, 246, 0.1) 100%), url('${imgBackground1}')`,
@@ -778,7 +762,7 @@ function Contacto() {
           ].map((item, index) => (
             <motion.div
               key={index}
-              variants={fadeInUp}
+              {...fadeInUp}
               whileHover={{ 
                 scale: 1.03,
                 boxShadow: "0 25px 50px rgba(139, 92, 246, 0.3)"
@@ -815,7 +799,6 @@ function Contacto() {
           ))}
         </motion.div>
 
-        {/* Enhanced contact card */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}

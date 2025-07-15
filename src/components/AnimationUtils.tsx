@@ -1,72 +1,58 @@
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
-// Animation variants
+// Animation variants fixed for TypeScript
 export const fadeIn = {
   initial: { opacity: 0 },
   animate: { opacity: 1 },
-  transition: { duration: 0.6 }
 };
 
 export const fadeInUp = {
   initial: { opacity: 0, y: 50 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
 };
 
 export const fadeInDown = {
   initial: { opacity: 0, y: -50 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.6 }
 };
 
 export const fadeInLeft = {
   initial: { opacity: 0, x: -50 },
   animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.6 }
 };
 
 export const fadeInRight = {
   initial: { opacity: 0, x: 50 },
   animate: { opacity: 1, x: 0 },
-  transition: { duration: 0.6 }
 };
 
 export const scaleIn = {
   initial: { opacity: 0, scale: 0.8 },
   animate: { opacity: 1, scale: 1 },
-  transition: { duration: 0.6 }
 };
 
 export const slideInFromBottom = {
   initial: { opacity: 0, y: 100 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: "easeOut" }
 };
 
 export const slideInFromTop = {
   initial: { opacity: 0, y: -100 },
   animate: { opacity: 1, y: 0 },
-  transition: { duration: 0.8, ease: "easeOut" }
 };
 
 export const rotateIn = {
   initial: { opacity: 0, rotate: -180 },
   animate: { opacity: 1, rotate: 0 },
-  transition: { duration: 0.8 }
 };
 
 export const bounceIn = {
   initial: { opacity: 0, scale: 0.3 },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     scale: 1,
-    transition: {
-      type: "spring",
-      damping: 10,
-      stiffness: 100
-    }
-  }
+  },
 };
 
 // Stagger animation for lists
@@ -74,63 +60,43 @@ export const staggerContainer = {
   initial: {},
   animate: {
     transition: {
-      staggerChildren: 0.1
-    }
-  }
+      staggerChildren: 0.1,
+    },
+  },
 };
 
 export const staggerItem = {
   initial: { opacity: 0, y: 20 },
-  animate: { 
-    opacity: 1, 
+  animate: {
+    opacity: 1,
     y: 0,
-    transition: {
-      duration: 0.5
-    }
-  }
+  },
 };
 
 // Hover animations
 export const hoverScale = {
   scale: 1.05,
-  transition: { duration: 0.2 }
 };
 
 export const hoverLift = {
   y: -5,
-  transition: { duration: 0.2 }
 };
 
 export const hoverGlow = {
   boxShadow: "0 0 20px rgba(139, 92, 246, 0.5)",
-  transition: { duration: 0.2 }
 };
 
 // Complex animations
 export const floatingAnimation = {
   y: [0, -10, 0],
-  transition: {
-    duration: 3,
-    repeat: Infinity,
-    ease: "easeInOut"
-  }
 };
 
 export const pulseAnimation = {
   scale: [1, 1.05, 1],
-  transition: {
-    duration: 2,
-    repeat: Infinity,
-    ease: "easeInOut"
-  }
 };
 
 export const wiggleAnimation = {
   x: [0, -5, 5, -5, 5, 0],
-  transition: {
-    duration: 0.5,
-    ease: "easeInOut"
-  }
 };
 
 // Page transition animations
@@ -138,7 +104,6 @@ export const pageTransition = {
   initial: { opacity: 0, y: 20 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -20 },
-  transition: { duration: 0.3 }
 };
 
 // Animated Section Component
@@ -149,27 +114,19 @@ interface AnimatedSectionProps {
   delay?: number;
 }
 
-export function AnimatedSection({ 
-  children, 
-  className = "", 
+export function AnimatedSection({
+  children,
+  className = "",
   animation = fadeInUp,
-  delay = 0 
+  delay = 0,
 }: AnimatedSectionProps) {
-  const animationWithDelay = {
-    ...animation,
-    transition: {
-      ...animation.transition,
-      delay
-    }
-  };
-
   return (
     <motion.div
       className={className}
-      initial={animationWithDelay.initial}
-      whileInView={animationWithDelay.animate}
+      initial={animation.initial}
+      whileInView={animation.animate}
       viewport={{ once: true, amount: 0.3 }}
-      transition={animationWithDelay.transition}
+      transition={{ duration: 0.6, delay }}
     >
       {children}
     </motion.div>
@@ -183,7 +140,11 @@ interface AnimatedTextProps {
   delay?: number;
 }
 
-export function AnimatedText({ text, className = "", delay = 0 }: AnimatedTextProps) {
+export function AnimatedText({
+  text,
+  className = "",
+  delay = 0,
+}: AnimatedTextProps) {
   const words = text.split(" ");
 
   return (
@@ -196,7 +157,7 @@ export function AnimatedText({ text, className = "", delay = 0 }: AnimatedTextPr
           viewport={{ once: true }}
           transition={{
             duration: 0.5,
-            delay: delay + index * 0.1
+            delay: delay + index * 0.1,
           }}
           className="inline-block mr-2"
         >
@@ -215,11 +176,11 @@ interface AnimatedCounterProps {
   className?: string;
 }
 
-export function AnimatedCounter({ 
-  from, 
-  to, 
-  duration = 2, 
-  className = "" 
+export function AnimatedCounter({
+  from,
+  to,
+  duration = 2,
+  className = "",
 }: AnimatedCounterProps) {
   return (
     <motion.span
@@ -230,8 +191,8 @@ export function AnimatedCounter({
       transition={{ duration: 0.5 }}
     >
       <motion.span
-        initial={from}
-        whileInView={to}
+        initial={{ value: from }}
+        whileInView={{ value: to }}
         viewport={{ once: true }}
         transition={{ duration, ease: "easeOut" }}
       >
@@ -245,16 +206,22 @@ export function AnimatedCounter({
 interface MagneticProps {
   children: ReactNode;
   className?: string;
-  strength?: number;
 }
 
-export function Magnetic({ children, className = "", strength = 0.3 }: MagneticProps) {
+export function Magnetic({
+  children,
+  className = "",
+}: MagneticProps) {
   return (
     <motion.div
       className={className}
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      transition={{ type: "spring", stiffness: 400, damping: 10 }}
+      transition={{
+        type: "spring",
+        stiffness: 400,
+        damping: 10,
+      }}
     >
       {children}
     </motion.div>
@@ -269,11 +236,11 @@ interface RevealOnScrollProps {
   animation?: any;
 }
 
-export function RevealOnScroll({ 
-  children, 
-  className = "", 
+export function RevealOnScroll({
+  children,
+  className = "",
   threshold = 0.3,
-  animation = fadeInUp 
+  animation = fadeInUp,
 }: RevealOnScrollProps) {
   return (
     <motion.div
@@ -281,7 +248,7 @@ export function RevealOnScroll({
       initial={animation.initial}
       whileInView={animation.animate}
       viewport={{ once: true, amount: threshold }}
-      transition={animation.transition}
+      transition={{ duration: 0.6 }}
     >
       {children}
     </motion.div>
@@ -291,11 +258,6 @@ export function RevealOnScroll({
 // Loading skeleton animation
 export const skeletonAnimation = {
   opacity: [0.5, 1, 0.5],
-  transition: {
-    duration: 1.5,
-    repeat: Infinity,
-    ease: "easeInOut"
-  }
 };
 
 // Typewriter effect
@@ -305,7 +267,11 @@ interface TypewriterProps {
   speed?: number;
 }
 
-export function Typewriter({ text, className = "", speed = 0.1 }: TypewriterProps) {
+export function Typewriter({
+  text,
+  className = "",
+  speed = 0.1,
+}: TypewriterProps) {
   return (
     <motion.div className={className}>
       {text.split("").map((char, index) => (
@@ -315,7 +281,7 @@ export function Typewriter({ text, className = "", speed = 0.1 }: TypewriterProp
           animate={{ opacity: 1 }}
           transition={{
             delay: index * speed,
-            duration: 0.1
+            duration: 0.1,
           }}
         >
           {char}
@@ -351,5 +317,5 @@ export default {
   AnimatedCounter,
   Magnetic,
   RevealOnScroll,
-  Typewriter
+  Typewriter,
 };
