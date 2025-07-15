@@ -1,0 +1,69 @@
+# IGNORAR ARCHIVOS REACT/TYPESCRIPT QUE CAUSAN EL ERROR
+App.tsx
+src/
+components/
+imports/
+styles/
+
+# IGNORAR ARCHIVOS DE CONFIGURACIÓN REACT
+package.json
+package-lock.json
+node_modules/
+vite.config.ts
+tsconfig.json
+tsconfig.node.json
+tailwind.config.js
+postcss.config.js
+
+# IGNORAR ARCHIVOS DE LIMPIEZA
+clean-project.js
+package-clean.json
+CLEANUP-INSTRUCTIONS.md
+fix-vercel-error.sh
+SOLUCION-VERCEL-ERROR.sh
+
+# IGNORAR ARCHIVOS DE DESARROLLO
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# IGNORAR ARCHIVOS DE BUILD
+dist/
+build/
+.next/
+.cache/
+out/
+
+# IGNORAR ARCHIVOS IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# IGNORAR LOGS
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# IGNORAR ARCHIVOS OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IGNORAR ARCHIVOS TEMPORALES
+*.tmp
+*.temp
+*.swp
+*.swo
+*.bak
+*.backup
