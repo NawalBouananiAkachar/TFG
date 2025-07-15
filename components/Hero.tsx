@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
+import Hyperspeed from "./hyperspeed";
 
 export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -37,8 +38,63 @@ export function Hero() {
   ];
 
   return (
-    <section id="hero" className="bg-[#000000] relative min-h-screen" data-name="Hero">
-      <div className="relative size-full" data-name="Hero">
+    <section id="hero" className="relative min-h-screen overflow-hidden" data-name="Hero">
+      {/* Hyperspeed as animated background */}
+      <div className="absolute inset-0 z-0 w-full h-full pointer-events-none">
+        <Hyperspeed 
+          effectOptions={{
+            onSpeedUp: () => console.log("Speed up!"),
+            onSlowDown: () => console.log("Slow down!"),
+            distortion: "turbulentDistortion",
+            length: 350,                      // Un poco más largo (de 300 a 350)
+            roadWidth: 9,                     // Ligeramente más ancho (de 8 a 9)
+            lanesPerRoad: 4,                  // Un carril más (de 3 a 4)
+            islandWidth: 2,
+            fov: 90,
+            fovSpeedUp: 110,                  // Un poco más de efecto (de 120 a 130)
+            speedUp: 1.2,                     // Ligeramente más rápido (de 1 a 1.2)
+            carLightsFade: 0.4,
+            totalSideLightSticks: 15,         // Solo 2 más (de 10 a 12)
+            lightPairsPerRoadWay: 20,         // Solo 3 más (de 15 a 18)
+            shoulderLinesWidthPercentage: 0.05,
+            brokenLinesWidthPercentage: 0.1,
+            brokenLinesLengthPercentage: 0.5,
+            lightStickWidth: [0.12, 0.5],
+            lightStickHeight: [1.3, 1.7],
+            movingAwaySpeed: [15, 25],        // Un poco más rápido
+            movingCloserSpeed: [-40, -60],    // Un poco más rápido
+            carLightsLength: [30, 50],        // Luces un poco más largas
+            carLightsRadius: [0.05, 0.16],    // Ligeramente más grandes
+            carWidthPercentage: [0.3, 0.5],
+            carShiftX: [-0.8, 0.8],
+            carFloorSeparation: [0, 5],
+            colors: {
+              roadColor: 0x0b001f,
+              islandColor: 0x000000,
+              background: 0x000000,
+              shoulderLines: 0xffffff,
+              brokenLines: 0xffffff,
+              leftCars: [
+                0x6e409b,
+                0x5c3685,
+                0x472b6a,
+                0xb595e0,
+                0xa472d9
+              ],
+              rightCars: [
+                0x5a3b83,
+                0x7a4fa7,
+                0x68408f,
+                0xceb1f1,
+                0xbc8fe6
+              ],
+              sticks: 0x000000,
+            },
+          }}
+          />
+      </div>
+      {/* Content above the animation */}
+      <div className="relative z-10 size-full" data-name="Hero">
         <div className="flex flex-col items-center justify-center min-h-screen relative size-full">
           <div className="box-border content-stretch flex flex-col gap-[419px] items-center justify-center min-h-screen pb-[63px] pt-[317.2px] px-4 sm:px-8 lg:px-[126px] relative size-full">
             <motion.div
@@ -216,7 +272,6 @@ export function Hero() {
                     </div>
                   ))}
                 </motion.div>
-
                 {/* Second marquee container - offset for seamless effect */}
                 <motion.div
                   animate={{ x: ["0%", "-100%"] }}
