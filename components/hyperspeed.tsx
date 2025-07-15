@@ -1,4 +1,4 @@
-import { useEffect, useRef, FC } from "react";
+import { useEffect, useRef, useImperativeHandle, forwardRef } from "react";
 import * as THREE from "three";
 import {
   BloomEffect,
@@ -943,13 +943,22 @@ class App {
     requestAnimationFrame(this.tick);
   }
 }
-const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
+const Hyperspeed = forwardRef(function Hyperspeed(props: HyperspeedProps, ref) {
+  const { effectOptions = {} } = props;
   const mergedOptions: HyperspeedOptions = {
     ...defaultOptions,
     ...effectOptions,
   };
-  const hyperspeed = useRef<HTMLDivElement>(null);
-  const appRef = useRef<App | null>(null);
+    const hyperspeed = useRef<HTMLDivElement>(null);
+    const appRef = useRef<App | null>(null);
+    useImperativeHandle(ref, () => ({
+    speedUp: () => {
+      appRef.current?.onMouseDown?.(new MouseEvent("mousedown"));
+    },
+    slowDown: () => {
+      appRef.current?.onMouseUp?.(new MouseEvent("mouseup"));
+    }
+  }));
 
   useEffect(() => {
     console.log("Hyperspeed MOUNTED");
@@ -1258,6 +1267,7 @@ const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
     };
   }, [JSON.stringify(effectOptions)]); // para que reaccione a cambios
   // para que reaccione a cambios
+  
 
   return (
     <div
@@ -1269,7 +1279,7 @@ const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
         position: "absolute",
         inset: 0,
         zIndex: 0,
-        pointerEvents: "none",
+        pointerEvents: "auto",
         overflow: "hidden",
         background: "transparent",
       }}
@@ -1277,7 +1287,7 @@ const Hyperspeed: FC<HyperspeedProps> = ({ effectOptions = {} }) => {
   );
 
 
-};
+});
 
 export default Hyperspeed;
 

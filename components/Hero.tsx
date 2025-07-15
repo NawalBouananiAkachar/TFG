@@ -1,9 +1,21 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Hyperspeed from "./hyperspeed";
 
 export function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const hyperspeedRef = useRef<{ speedUp: () => void; slowDown: () => void } | null>(null);
+
+  const handleMouseEnter = () => {
+    if (hyperspeedRef.current && hyperspeedRef.current.speedUp) {
+      hyperspeedRef.current.speedUp();
+    }
+  };
+  const handleMouseLeave = () => {
+    if (hyperspeedRef.current && hyperspeedRef.current.slowDown) {
+      hyperspeedRef.current.slowDown();
+    }
+  };
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -12,12 +24,10 @@ export function Hero() {
         y: (e.clientY - window.innerHeight / 2) * 0.005
       });
     };
-
     window.addEventListener('mousemove', handleMouseMove);
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
-  // Achievements array - base content
   const achievements = [
     "Premios Fundadoras 2024",
     "Featured Las Provincias",
@@ -27,8 +37,6 @@ export function Hero() {
     "FORINVEST 2024",
     "VDS 2024"
   ];
-
-  // Create multiple copies for truly infinite scroll
   const infiniteAchievements = [
     ...achievements,
     ...achievements,
@@ -38,33 +46,38 @@ export function Hero() {
   ];
 
   return (
-    <section id="hero" className="relative min-h-screen overflow-hidden" data-name="Hero">
+    <section
+      id="hero"
+      className="relative min-h-screen overflow-hidden"
+      data-name="Hero"
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+    >
       {/* Hyperspeed as animated background */}
-      <div className="absolute inset-0 z-0 w-full h-full pointer-events-none">
-        <Hyperspeed 
+      <div className="absolute inset-0 z-0 w-full h-full pointer-events-auto">
+        <Hyperspeed
+          ref={hyperspeedRef}
           effectOptions={{
-            onSpeedUp: () => console.log("Speed up!"),
-            onSlowDown: () => console.log("Slow down!"),
             distortion: "turbulentDistortion",
-            length: 350,                      // Un poco más largo (de 300 a 350)
-            roadWidth: 9,                     // Ligeramente más ancho (de 8 a 9)
-            lanesPerRoad: 4,                  // Un carril más (de 3 a 4)
+            length: 350,
+            roadWidth: 9,
+            lanesPerRoad: 4,
             islandWidth: 2,
             fov: 90,
-            fovSpeedUp: 110,                  // Un poco más de efecto (de 120 a 130)
-            speedUp: 1.2,                     // Ligeramente más rápido (de 1 a 1.2)
+            fovSpeedUp: 110,
+            speedUp: 0.6,
             carLightsFade: 0.4,
-            totalSideLightSticks: 15,         // Solo 2 más (de 10 a 12)
-            lightPairsPerRoadWay: 20,         // Solo 3 más (de 15 a 18)
+            totalSideLightSticks: 20,
+            lightPairsPerRoadWay: 30,
             shoulderLinesWidthPercentage: 0.05,
             brokenLinesWidthPercentage: 0.1,
             brokenLinesLengthPercentage: 0.5,
             lightStickWidth: [0.12, 0.5],
             lightStickHeight: [1.3, 1.7],
-            movingAwaySpeed: [15, 25],        // Un poco más rápido
-            movingCloserSpeed: [-40, -60],    // Un poco más rápido
-            carLightsLength: [30, 50],        // Luces un poco más largas
-            carLightsRadius: [0.05, 0.16],    // Ligeramente más grandes
+            movingAwaySpeed: [5, 10],
+            movingCloserSpeed: [-15, -25],
+            carLightsLength: [30, 50],
+            carLightsRadius: [0.05, 0.16],
             carWidthPercentage: [0.3, 0.5],
             carShiftX: [-0.8, 0.8],
             carFloorSeparation: [0, 5],
@@ -91,12 +104,12 @@ export function Hero() {
               sticks: 0x000000,
             },
           }}
-          />
+        />
       </div>
       {/* Content above the animation */}
       <div className="relative z-10 size-full" data-name="Hero">
         <div className="flex flex-col items-center justify-center min-h-screen relative size-full">
-          <div className="box-border content-stretch flex flex-col gap-[419px] items-center justify-center min-h-screen pb-[63px] pt-[317.2px] px-4 sm:px-8 lg:px-[126px] relative size-full">
+          <div className="box-border content-stretch flex flex-col gap-[120px] items-center justify-center min-h-screen pb-[63px] pt-[120px] px-4 sm:px-8 lg:px-[126px] relative size-full">
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -226,93 +239,93 @@ export function Hero() {
                 </motion.p>
               </motion.div>
             </motion.div>
-            
-            {/* Truly infinite scrolling achievements */}
-            <motion.div
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 1.6 }}
-              className="box-border content-stretch flex flex-row items-center justify-start overflow-hidden p-0 relative shrink-0 w-full"
-              data-name="Logros"
-            >
-              <div className="flex">
-                {/* First marquee container */}
-                <motion.div
-                  animate={{ x: ["0%", "-100%"] }}
-                  transition={{
-                    duration: 40,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0 min-w-max"
-                  data-name="Container"
-                >
-                  {infiniteAchievements.map((achievement, index) => (
-                    <div key={`first-${index}`} className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0">
-                      <motion.div
-                        whileHover={{ 
-                          scale: 1.1,
-                          color: '#8b5cf6',
-                          textShadow: '0 0 20px rgb(139, 92, 246, 0.8)'
-                        }}
-                        className="box-border content-stretch flex flex-col items-start justify-start px-8 py-0 relative shrink-0 cursor-pointer"
-                        data-name="Component 1"
-                      >
-                        <div className="flex flex-col font-['Saira_Condensed:Medium',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#a06fff] text-[16px] text-left text-nowrap transition-all duration-300">
-                          <p className="block leading-[24px] whitespace-pre">
-                            {achievement}
-                          </p>
-                        </div>
-                      </motion.div>
-                      <motion.div
-                        whileHover={{ scale: 1.5, opacity: 1 }}
-                        className="bg-[#a06fff] opacity-60 rounded-sm shrink-0 size-1 transition-all duration-300"
-                        data-name="Background"
-                      />
-                    </div>
-                  ))}
-                </motion.div>
-                {/* Second marquee container - offset for seamless effect */}
-                <motion.div
-                  animate={{ x: ["0%", "-100%"] }}
-                  transition={{
-                    duration: 40,
-                    repeat: Infinity,
-                    ease: "linear"
-                  }}
-                  className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0 min-w-max"
-                  data-name="Container"
-                >
-                  {infiniteAchievements.map((achievement, index) => (
-                    <div key={`second-${index}`} className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0">
-                      <motion.div
-                        whileHover={{ 
-                          scale: 1.1,
-                          color: '#8b5cf6',
-                          textShadow: '0 0 20px rgb(139, 92, 246, 0.8)'
-                        }}
-                        className="box-border content-stretch flex flex-col items-start justify-start px-8 py-0 relative shrink-0 cursor-pointer"
-                        data-name="Component 1"
-                      >
-                        <div className="flex flex-col font-['Saira_Condensed:Medium',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#a06fff] text-[16px] text-left text-nowrap transition-all duration-300">
-                          <p className="block leading-[24px] whitespace-pre">
-                            {achievement}
-                          </p>
-                        </div>
-                      </motion.div>
-                      <motion.div
-                        whileHover={{ scale: 1.5, opacity: 1 }}
-                        className="bg-[#a06fff] opacity-60 rounded-sm shrink-0 size-1 transition-all duration-300"
-                        data-name="Background"
-                      />
-                    </div>
-                  ))}
-                </motion.div>
-              </div>
-            </motion.div>
           </div>
         </div>
       </div>
+      {/* Achievements justo debajo del hero */}
+      <motion.div
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, delay: 1.6 }}
+        className="box-border content-stretch flex flex-row items-center justify-start overflow-hidden p-0 relative shrink-0 w-full"
+        data-name="Logros"
+        style={{ background: "transparent" }}
+      >
+        <div className="flex w-full">
+          {/* First marquee container */}
+          <motion.div
+            animate={{ x: ["0%", "-100%"] }}
+            transition={{
+              duration: 60,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0 min-w-max"
+            data-name="Container"
+          >
+            {infiniteAchievements.map((achievement, index) => (
+              <div key={`first-${index}`} className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0">
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.1,
+                    color: '#8b5cf6',
+                    textShadow: '0 0 20px rgb(139, 92, 246, 0.8)'
+                  }}
+                  className="box-border content-stretch flex flex-col items-start justify-start px-8 py-0 relative shrink-0 cursor-pointer"
+                  data-name="Component 1"
+                >
+                  <div className="flex flex-col font-['Saira_Condensed:Medium',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#a06fff] text-[16px] text-left text-nowrap transition-all duration-300">
+                    <p className="block leading-[24px] whitespace-pre">
+                      {achievement}
+                    </p>
+                  </div>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.5, opacity: 1 }}
+                  className="bg-[#a06fff] opacity-60 rounded-sm shrink-0 size-1 transition-all duration-300"
+                  data-name="Background"
+                />
+              </div>
+            ))}
+          </motion.div>
+          {/* Second marquee container */}
+          <motion.div
+            animate={{ x: ["0%", "-100%"] }}
+            transition={{
+              duration: 60,
+              repeat: Infinity,
+              ease: "linear"
+            }}
+            className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0 min-w-max"
+            data-name="Container"
+          >
+            {infiniteAchievements.map((achievement, index) => (
+              <div key={`second-${index}`} className="box-border content-stretch flex flex-row items-center justify-start p-0 relative shrink-0">
+                <motion.div
+                  whileHover={{ 
+                    scale: 1.1,
+                    color: '#8b5cf6',
+                    textShadow: '0 0 20px rgb(139, 92, 246, 0.8)'
+                  }}
+                  className="box-border content-stretch flex flex-col items-start justify-start px-8 py-0 relative shrink-0 cursor-pointer"
+                  data-name="Component 1"
+                >
+                  <div className="flex flex-col font-['Saira_Condensed:Medium',_sans-serif] justify-center leading-[0] not-italic relative shrink-0 text-[#a06fff] text-[16px] text-left text-nowrap transition-all duration-300">
+                    <p className="block leading-[24px] whitespace-pre">
+                      {achievement}
+                    </p>
+                  </div>
+                </motion.div>
+                <motion.div
+                  whileHover={{ scale: 1.5, opacity: 1 }}
+                  className="bg-[#a06fff] opacity-60 rounded-sm shrink-0 size-1 transition-all duration-300"
+                  data-name="Background"
+                />
+              </div>
+            ))}
+          </motion.div>
+        </div>
+      </motion.div>
     </section>
   );
 }
