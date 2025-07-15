@@ -16,7 +16,7 @@ import { Nav } from "./components/Nav";
 import { SobreNosotros } from "./components/SobreNosotros";
 import { AnimatedSection, fadeInUp, fadeInLeft, fadeInRight } from "./components/AnimationUtils";
 
-// Use placeholder images for assets that can't be found
+// Use placeholder paths that work in production
 const imgLogo = "/assets/images/logo.png";
 const imgBackground = "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80";
 const imgBackground1 = "https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=800&q=80";
@@ -234,7 +234,7 @@ function TermsOfService() {
   );
 }
 
-// Hero Section with Enhanced Animations
+// Hero Section with Figma Design + Enhanced Animations + Infinite Scroll
 function Hero() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
@@ -250,6 +250,7 @@ function Hero() {
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, []);
 
+  // Achievements array - base content
   const achievements = [
     "Premios Fundadoras 2024",
     "Featured Las Provincias",
@@ -260,7 +261,14 @@ function Hero() {
     "VDS 2024"
   ];
 
-  const infiniteAchievements = [...achievements, ...achievements, ...achievements, ...achievements, ...achievements];
+  // Create multiple copies for truly infinite scroll
+  const infiniteAchievements = [
+    ...achievements,
+    ...achievements,
+    ...achievements,
+    ...achievements,
+    ...achievements
+  ];
 
   return (
     <section id="hero" className="bg-[#000000] relative min-h-screen" data-name="Hero">
@@ -394,7 +402,7 @@ function Hero() {
               </motion.div>
             </motion.div>
             
-            {/* Infinite scrolling achievements */}
+            {/* Truly infinite scrolling achievements */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -403,6 +411,7 @@ function Hero() {
               data-name="Logros"
             >
               <div className="flex">
+                {/* First marquee container */}
                 <motion.div
                   animate={{ x: ["0%", "-100%"] }}
                   transition={{
@@ -439,6 +448,7 @@ function Hero() {
                   ))}
                 </motion.div>
 
+                {/* Second marquee container - offset for seamless effect */}
                 <motion.div
                   animate={{ x: ["0%", "-100%"] }}
                   transition={{
@@ -483,7 +493,7 @@ function Hero() {
   );
 }
 
-// Innova Section
+// Innova Section with Enhanced Hover Effects
 function Innova() {
   return (
     <section id="innova" className="bg-[#000000] relative py-12 sm:py-20">
@@ -805,7 +815,7 @@ function Contacto() {
           ))}
         </motion.div>
 
-        {/* Contact card */}
+        {/* Enhanced contact card */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
