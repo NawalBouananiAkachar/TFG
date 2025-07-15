@@ -17,9 +17,6 @@ interface Distortion {
   getDistortion: string;
   getJS?: (progress: number, time: number) => THREE.Vector3;
 }
-interface Distortions {
-  [key: string]: Distortion;
-}
 interface Colors {
   roadColor: number;
   islandColor: number;
@@ -102,9 +99,7 @@ const defaultOptions: HyperspeedOptions = {
 };
 
 // Helpers
-function nsin(val: number) {
-  return Math.sin(val) * 0.5 + 0.5;
-}
+
 function random(base: number | [number, number]): number {
   if (Array.isArray(base)) {
     return Math.random() * (base[1] - base[0]) + base[0];
