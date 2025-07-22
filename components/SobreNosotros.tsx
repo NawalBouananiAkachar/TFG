@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Monitor, Heart, Target, Users } from "lucide-react";
-import { AnimatedSection, staggerContainer } from "./AnimationUtils";
+import { AnimatedSection, fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from "./AnimationUtils";
 
 // Enhanced About Section
 export function SobreNosotros() {
@@ -30,8 +30,9 @@ export function SobreNosotros() {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8 mb-12 sm:mb-20 max-w-6xl mx-auto">
           <motion.div
-            initial="initial"
-            whileInView="animate"
+            variants={fadeInLeft}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
             whileHover={{ 
               scale: 1.02, 
@@ -50,8 +51,9 @@ export function SobreNosotros() {
           </motion.div>
 
           <motion.div
-            initial="initial"
-            whileInView="animate"
+            variants={fadeInRight}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
             whileHover={{ 
               scale: 1.02, 
@@ -73,8 +75,8 @@ export function SobreNosotros() {
         {/* Feature grid */}
         <motion.div
           variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
+          initial="hidden"
+          whileInView="show"
           viewport={{ once: true }}
           className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 max-w-6xl mx-auto"
         >
@@ -86,6 +88,7 @@ export function SobreNosotros() {
           ].map((item, index) => (
             <motion.div
               key={index}
+              variants={fadeInUp}
               whileHover={{ 
                 scale: 1.05, 
                 y: -5,

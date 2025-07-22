@@ -1,10 +1,9 @@
 import { motion } from "framer-motion";
-import { AnimatedSection} from "./AnimationUtils";
+import { AnimatedSection, fadeInLeft, fadeInRight } from "./AnimationUtils";
 
 import imgBackground from "./assets/Background.png";
 import imgBackground1 from "./assets/Background2.png";
 
-// Proyectos Section
 export function Proyectos() {
   return (
     <section id="proyectos" className="py-12 sm:py-20 bg-gradient-to-b from-black to-purple-900/10">
@@ -32,8 +31,9 @@ export function Proyectos() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 sm:gap-12 max-w-6xl mx-auto">
           <motion.div
-            initial="initial"
-            whileInView="animate"
+            variants={fadeInLeft}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
             className="bg-[rgba(255,255,255,0.03)] border border-[rgba(139,92,246,0.25)] rounded-xl p-8 hover:bg-[rgba(255,255,255,0.05)] transition-all duration-500 group shadow-[0px_4px_20px_0px_rgba(139,92,246,0.15)]"
             style={{
@@ -60,8 +60,9 @@ export function Proyectos() {
           </motion.div>
 
           <motion.div
-            initial="initial"
-            whileInView="animate"
+            variants={fadeInRight}
+            initial="hidden"
+            whileInView="show"
             viewport={{ once: true }}
             className="bg-[rgba(255,255,255,0.03)] border border-[rgba(139,92,246,0.25)] rounded-xl p-8 hover:bg-[rgba(255,255,255,0.05)] transition-all duration-500 group shadow-[0px_4px_20px_0px_rgba(139,92,246,0.15)]"
             style={{
